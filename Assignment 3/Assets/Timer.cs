@@ -5,7 +5,7 @@ using UnityEngine;
 public class Timer : MonoBehaviour
 {
     float timer;
-    float maxTime = 5f;
+    float maxTime = 223.0f;
 
     void Start()
     {
