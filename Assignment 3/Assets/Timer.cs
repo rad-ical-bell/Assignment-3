@@ -5,14 +5,32 @@ using UnityEngine;
 public class Timer : MonoBehaviour
 {
     float timer;
+    float maxTime = 5f;
+
     void Start()
     {
         timer = Time.time;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(timer);
+        if (maxTime > 0)
+        {
+            maxTime -= Time.deltaTime;
+            Debug.Log(maxTime);
+         
+        }
+        else
+        {
+            stopAll();
+        }
+        
+    }
+
+    void stopAll()
+    {
+        return;
     }
 }
