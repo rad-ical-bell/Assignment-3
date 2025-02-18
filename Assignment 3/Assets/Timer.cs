@@ -4,14 +4,7 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    float timer;
     float maxTime = 223.0f;
-
-    void Start()
-    {
-        timer = Time.time;
-
-    }
 
     // Update is called once per frame
     void Update()
