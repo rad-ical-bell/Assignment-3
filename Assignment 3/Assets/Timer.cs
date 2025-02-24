@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    float maxTime = 223.0f;
+    public static float time = 0f;
 
     // Update is called once per frame
     void Update()
     {
-        if (maxTime > 0)
+        if (time < 223)
         {
-            maxTime -= Time.deltaTime;
-            Debug.Log(maxTime);
-         
+            time += Time.deltaTime;
         }
         else
         {
@@ -24,6 +22,6 @@ public class Timer : MonoBehaviour
 
     void stopAll()
     {
-        return;
+        Debug.Log("all done");
     }
 }
