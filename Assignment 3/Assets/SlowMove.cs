@@ -29,16 +29,16 @@ public class SlowMove : MonoBehaviour
     {
         timePassed = Timer.time;
 
-        if (timePassed < 7f)
+        if (timePassed < 8f)
         {
-            float lerpFactor = timePassed / 7f;
+            float lerpFactor = timePassed / 8f;
             directionalLight.transform.position = Vector3.Lerp(startPosition, endPosition, lerpFactor);
             directionalLight.transform.rotation = Quaternion.Lerp(startRotation, endRotation, lerpFactor);
         }
-        else if (timePassed >= 7 && timePassed <= 9f)
+        else if (timePassed >= 8 && timePassed <= 15f)
         {
             Flashing();
-        }
+        } 
         else
         {
             directionalLight.intensity = flashIntensity;

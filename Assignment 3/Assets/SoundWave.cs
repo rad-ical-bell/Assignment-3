@@ -31,17 +31,17 @@ public class SoundWave : MonoBehaviour
     {
         float timePassed = Timer.time;
 
-        if (timePassed < 7f)
+        if (timePassed < 8f)
         {
             Glitch(timePassed);
         }
 
-        if (timePassed >= 7f && !cubesDestroyed)
+        if (timePassed >= 8f && !cubesDestroyed)
         {
             DestroyCubes();
         }
 
-        if (timePassed >= 7f && timePassed < 15f && cubes == null)
+        if (timePassed >= 8f && timePassed < 15f && cubes == null)
         {
             CreateCubes();
         }

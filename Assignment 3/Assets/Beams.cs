@@ -6,15 +6,15 @@ public class Beams : MonoBehaviour
 {
     public AudioSource audioSource;
     public LineRenderer lineRenderer; 
-    public int numOfRibbons = 5;    
+    public int numOfRibbons = 100;    
     public float ribbonLength = 10f; 
     public float maxHeight = 3f;     
     public float movementSpeed = 1f; 
     private GameObject[] ribbons;   
     private float[] audioData;       
     private float timePassed;
-    private float startTime = 31f;   
-    private float endTime = 38f;     
+    private float startTime = 15f;   
+    private float endTime = 20f;     
 
     // Start is called before the first frame update
     void Start()

@@ -11,6 +11,7 @@ public class lerp : MonoBehaviour
     Vector3[] startPosition, endPosition;
     float lerpFraction;
     float t;
+    float speed = 5f;
 
     public AudioSource audioSource; 
     private float[] audioSpectrum; 
@@ -26,10 +27,10 @@ public class lerp : MonoBehaviour
         for (int i = 0; i < numSphere; i++)
         {
             float r = 10f;
-            startPosition[i] = new Vector3(r * Random.Range(-1f, 1f), r * Random.Range(-1f, 1f), r * Random.Range(-1f, 1f));
+            startPosition[i] = new Vector3(r * speed* Random.Range(-1f, 1f), r * speed * Random.Range(-1f, 1f), r * Random.Range(-1f, 1f));
 
             r = 3f;
-            endPosition[i] = new Vector3(r * Random.Range(-1f, 1f), r * Random.Range(-1f, 1f), r * Random.Range(-1f, 1f));
+            endPosition[i] = new Vector3(r * speed * Random.Range(-1f, 1f), r * speed * Random.Range(-1f, 1f), r * Random.Range(-1f, 1f));
         }
     }
 
@@ -39,7 +40,7 @@ public class lerp : MonoBehaviour
         timePassed = Timer.time;
         audioSource.GetSpectrumData(audioSpectrum, 0, FFTWindow.Hanning); 
 
-        if (timePassed >= 31f && timePassed <= 38f)
+        if (timePassed >= 15f && timePassed <= 31f)
         {
             if (spheres[0] == null)
             {
@@ -51,7 +52,7 @@ public class lerp : MonoBehaviour
 
                     Renderer sphereRenderer = spheres[i].GetComponent<Renderer>();
                     float hue = (float)i / numSphere;
-                    Color color = Color.HSVToRGB(hue, 1f, 1f);
+                    Color color = Color.HSVToRGB(hue, 0.5f, .08f);
                     sphereRenderer.material.color = color;
                 }
             }
@@ -65,18 +66,25 @@ public class lerp : MonoBehaviour
                 Renderer sphereRenderer = spheres[i].GetComponent<Renderer>();
                 
                 float amplitude = audioSpectrum[i % audioSpectrum.Length];  
-                
-                float scaleMultiplier = Mathf.Lerp(0.1f, 2f, amplitude); 
-                spheres[i].transform.localScale = new Vector3(scaleMultiplier, scaleMultiplier, scaleMultiplier);
-
-                float hue = Mathf.Abs(Mathf.Sin(timePassed * 0.5f + i * 0.1f)); 
+                float hue = Mathf.Abs(Mathf.Sin(timePassed * 2f + i * 0.1f)); 
                 float saturation = Mathf.Clamp(amplitude * 2f, 0f, 1f); 
-                Color color = Color.HSVToRGB(hue, saturation, 1f); 
+                float brightness = Mathf.Clamp(1 - amplitude, 0.4f, 1f);
+                Color color = Color.HSVToRGB(hue, saturation, brightness); 
                 sphereRenderer.material.color = color;
             }
         }
 
-        if (timePassed > 38f)
+        if (timePassed > 31f && timePassed <= 39)
+        {
+            for (int i = 0; i < numSphere; i++)
+            {
+                Renderer sphereRenderer = spheres[i].GetComponent<Renderer>();
+                Color color = Color.HSVToRGB(0.1f + (i / 3f), 0f + (i / 2f), 0.2f); 
+                sphereRenderer.material.color = color;
+            }
+        }
+
+        if (timePassed > 40f)
         {
             for (int i = 0; i < numSphere; i++)
             {
