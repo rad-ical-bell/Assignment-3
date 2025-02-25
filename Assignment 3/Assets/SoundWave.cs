@@ -31,12 +31,12 @@ public class SoundWave : MonoBehaviour
     {
         float timePassed = Timer.time;
 
-        if ((timePassed < 8f) || (timePassed > 138f && timePassed < 148))
+        if ((timePassed < 6f))
         {
             Glitch(timePassed);
         }
 
-        if ((timePassed >= 8f && !cubesDestroyed) || (timePassed > 148 && !cubesDestroyed))
+        if ((timePassed >= 8f && !cubesDestroyed))
         {
             DestroyCubes();
         }
