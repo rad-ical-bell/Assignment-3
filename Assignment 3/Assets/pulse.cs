@@ -5,15 +5,32 @@ using UnityEngine;
 public class NewBehaviourScript : MonoBehaviour
 {
     public AudioSource audioSource;      
-    public int numberOfPrimitives = 100;  
+    public int numberOfPrimitives = 15;  
     public float pulseSpeed = 5f;  
     public float scaleFactor = 0.5f; 
-    public float startTime = 40f;  
-    public float endTime = 46f; 
+    private float startTime = 37f;  
+    private float endTime = 46f; 
+
+    public GameObject objectToAppear; 
+    private float popUpStartTime = 46f;   
+    private float popUpEndTime = 50f; 
+    
+    private float startTimeCubes = 122f;  
+    private float endTimeCubes = 129f;  
 
     private GameObject[] primitives;   
     private float[] spectrum = new float[256]; 
     private bool cubesActive = false; 
+    private bool objectActive = false;
+    private bool cubesActiveSecondPeriod = false;
+
+    private void Start()
+    {
+        if (objectToAppear != null)
+        {
+            objectToAppear.SetActive(false);  
+        }
+    }
 
     private void Update()
     {
@@ -36,13 +53,55 @@ public class NewBehaviourScript : MonoBehaviour
             foreach (GameObject primitive in primitives)
             {
                 float pulse = Mathf.Lerp(1, 1 + bassIntensity * scaleFactor, Mathf.Sin(Time.time * pulseSpeed));
-                primitive.transform.localScale = new Vector3(pulse, pulse, pulse); // Apply scale to all axes (X, Y, Z)
+                primitive.transform.localScale = new Vector3(pulse, pulse, pulse);
             }
         }
         else if (Time.time > endTime && cubesActive)
         {
             DestroyCubes();
             cubesActive = false;
+        }
+
+        if (Time.time >= startTimeCubes && Time.time <= endTimeCubes)
+        {
+            if (!cubesActiveSecondPeriod)
+            {
+                InstantiateCubes();  
+                cubesActiveSecondPeriod = true;
+            }
+
+            audioSource.GetSpectrumData(spectrum, 0, FFTWindow.BlackmanHarris);
+
+            float bassIntensity = 0f;
+            for (int i = 0; i < 5; i++)  
+            {
+                bassIntensity += spectrum[i];
+            }
+
+            foreach (GameObject primitive in primitives)
+            {
+                float pulse = Mathf.Lerp(1, 1 + bassIntensity * scaleFactor, Mathf.Sin(Time.time * pulseSpeed));
+                primitive.transform.localScale = new Vector3(pulse, pulse, pulse);
+            }
+        }
+        else if (Time.time > endTimeCubes && cubesActiveSecondPeriod)
+        {
+            DestroyCubes();
+            cubesActiveSecondPeriod = false;
+        }
+
+        if (Time.time >= popUpStartTime && Time.time <= popUpEndTime)
+        {
+            if (!objectActive)
+            {
+                EnableObject();
+                objectActive = true;
+            }
+        }
+        else if (Time.time > popUpEndTime && objectActive)
+        {
+            DisableObject();
+            objectActive = false;
         }
     }
 
@@ -65,6 +124,20 @@ public class NewBehaviourScript : MonoBehaviour
             Destroy(primitive);
         }
     }
-}
 
-    
+    private void EnableObject()
+    {
+        if (objectToAppear != null)
+        {
+            objectToAppear.SetActive(true);
+        }
+    }
+
+    private void DisableObject()
+    {
+        if (objectToAppear != null)
+        {
+            objectToAppear.SetActive(false);
+        }
+    }
+}

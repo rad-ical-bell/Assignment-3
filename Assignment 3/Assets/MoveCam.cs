@@ -42,9 +42,9 @@ public class MoveCam : MonoBehaviour
             cam.transform.rotation = Quaternion.Lerp(startRotation, endRotation, lerpFactor);
         }
         
-        if (timePassed > 25f && timePassed <= 35f) 
+        if (timePassed > 25f && timePassed <= 38f) 
         {
-            float lerpFactor = (timePassed - 25f)/ 10f;
+            float lerpFactor = (timePassed - 25f)/ 13f;
             cam.transform.position = Vector3.Lerp(endPosition, newPosition, lerpFactor);
             cam.transform.rotation = Quaternion.Lerp(endRotation, newRotation, lerpFactor);
         }
@@ -55,6 +55,13 @@ public class MoveCam : MonoBehaviour
             cam.transform.rotation = Quaternion.Lerp(newRotation, newestRotation, lerpFactor);
         
         }
+        // if (timePassed > 77f && timePassed <= 79f)
+        // {
+        //     float lerpFactor = (timePassed - 39f)/ 7f;
+        //     cam.transform.position = Vector3.Lerp(newPosition, newestPosition, lerpFactor);
+        //     cam.transform.rotation = Quaternion.Lerp(newRotation, newestRotation, lerpFactor);
+        
+        // }
     }
 }
 
