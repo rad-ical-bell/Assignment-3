@@ -11,7 +11,9 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-        if (!moveComplete)
+        float timePassed = Timer.time;
+
+        if (!moveComplete && timePassed > 46f && timePassed < 50f)
         {
             if (transform.position.y < 1f)
             {
@@ -34,16 +36,16 @@ public class Movement : MonoBehaviour
         {
             Quaternion targetRotation = Quaternion.Euler(-90f, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * speed * 100f);
-            if(transform.rotation.x == -90f)
+
+            if (Mathf.Abs(transform.rotation.eulerAngles.x + 90f) < 1f)
             {
                 rotateComplete = true;
             }
         }
         else
         {
-            Quaternion targetRotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, -360f);
+            Quaternion targetRotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z - 360f);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * speed * 100f);
         }
-        
     }
 }
