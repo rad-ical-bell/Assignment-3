@@ -10,7 +10,7 @@ public class WaveOfSpheres : MonoBehaviour
     public float waveFrequency = 4.0f;
     public float offset = 0.0f;
     public float timer;
-
+    public RotateObject hat;
     private List<Transform> objects = new List<Transform>();
 
     void CreateWave()
